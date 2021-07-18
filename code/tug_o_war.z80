@@ -1,0 +1,162 @@
+; TUG O' WAR game for the Microcomp
+; ---------------------------------
+;
+; Published in the Talking Electronics Magazine issue 14
+; Listing type in by Brian Chiha
+;
+; Tug O' War is a game for two players.  The aim is to tap a button multiple
+; times to increase a number from 0 to 9.  When a player reaches 9, they win
+; and the game ends.  To increase their number they press their button, either
+; 'A' or 'B'.  The numbers are displayed on the Seven Segment Displays and the 
+; left hand display is for Button/Player 'A' and the right hand is for 'B'.
+; There is a catch, more button presses are needed as the number gets closer
+; to 9 and if one player out presses the other player, their count goes higher,
+; while the slower players count decreases.
+;
+;Constants
+BTN_A:      EQU     80H            ;Button 'A' 
+BTN_B:      EQU     40H            ;Button 'B' 
+BOTH_BTN:   EQU     BTN_A + BTN_B  ;Button 'A' and 'B' 
+
+            ORG     0000H 
+START:               
+            ;Start up
+            LD      HL,SEGTBL  ;Point to start of 0-9 table for LH display
+            LD      DE,SEGTBL  ;Point to start of 0-9 table for RH display
+            LD      C,00H      ;Load Button Debounce test flag register with zero
+DISPLAY:
+            ;Display multiplexing
+            LD      A,(DE)     ;Load A with the current digit for RH display
+            OUT     (02),A     ;Output digit to RH display
+            LD      B,20H      ;Load B with short delay
+LOOP1:      DJNZ    LOOP1      ;Delay
+            XOR     A          ;Zero A
+            SET     7,A        ;Set Bit 7 to activate LH display
+            ADD     A,(HL)     ;Add A with the current digit for LH display
+            OUT     (02),A     ;Output digit to LH display
+BUTTONS:
+            ;Look at Buttons
+            IN      A,(01)     ;Read input latch
+            CP      BOTH_BTN   ;Are both buttons pressed? 40H + 80H = C0H
+            JR      Z,NO_UPD   ;Yes, Don't update anything and repeat display
+            CP      BTN_B      ;Has button 'B' been pressed?
+            JR      Z,B_PRESS  ;Yes, Handle button 'B' pressed
+            RES     0,C        ;No, Reset Button 'B' pressed flag
+CHK_A: 
+            IN      A,(01)     ;Read input latch
+            CP      BOTH_BTN   ;Are both buttons pressed? 40H + 80H = C0H
+            JR      Z,NO_UPD   ;Yes, Don't update anything and repeat display
+            CP      BTN_A      ;Has button 'A' been pressed?
+            JR      Z,A_PRESS  ;Yes, Handle button 'B' pressed
+            RES     1,C        ;No, Reset Button 'A' pressed flag
+NO_UPD:
+            ;Repeat Display
+            LD      B,10H      ;Load B with short delay
+LOOP2:      DJNZ    LOOP2      ;Delay
+            JR      DISPLAY    ;Jump back to display routine
+B_PRESS:
+            ;Button 'B' pressed
+            BIT     0,C        ;Has button 'B' already been pressed?
+            JR      NZ,CHK_A   ;Yes, check button 'A'
+            SET     0,C        ;Set button 'B' pressed flag
+            INC     DE         ;Move current digit for RH closer to 9
+            LD      A,(DE)     ;Load A with the next digit for RH display
+            CP      67H        ;Is it 9? 
+            JR      NZ,DEC_A   ;No, Jump to Decrease LH player
+            ;Player B wins
+DIS_WIN_B:                     ;Flash RH display
+            LD      C,10H      ;Load C with multiplex delay
+LOOP3:
+            LD      A,(DE)     ;Load A with the current digit for RH display
+            OUT     (02),A     ;Output digit to RH display
+            LD      B,10H      ;Load B with short delay
+LOOP4:      DJNZ    LOOP4      ;Delay
+            XOR     A          ;Zero A
+            SET     7,A        ;Set Bit 7 to activate LH display
+            ADD     A,(HL)     ;Add A with the current digit for LH display
+            OUT     (02),A     ;Output digit to LH display
+            LD      B,10H      ;Load B with short delay
+LOOP5:      DJNZ    LOOP5      ;Delay
+            DEC     C          ;Decrease multiplex repeater
+            JR      NZ,LOOP3   ;Repeat display
+            LD      C,10H      ;Load C with multiplex delay
+LOOP6:
+            XOR     A          ;Zero A
+            OUT     (02),A     ;Output digit to RH display
+            LD      B,10H      ;Load B with short delay
+LOOP7:      DJNZ    LOOP7      ;Delay
+            XOR     A          ;Zero A
+            SET     7,A        ;Set Bit 7 to activate LH display
+            ADD     A,(HL)     ;Add A with the current digit for LH display
+            OUT     (02),A     ;Output digit to LH display
+            LD      B,10H      ;Load B with short delay
+LOOP8:      DJNZ    LOOP8      ;Delay
+            DEC     C          ;Decrease multiplex repeater
+            JR      NZ,LOOP6   ;Repeat display
+            JR      DIS_WIN_B  ;Keep Flashing Screen forever!
+DEC_A:
+            ;Decrease LH Player digit
+            LD      A,(HL)     ;Add A with the current digit for LH display
+            CP      3FH        ;Is it Zero?
+            JR      NZ,DO_DEC_A ;No, Do Decrease
+            JR      BUTTONS    ;Yes, Just check buttons again and display
+DO_DEC_A:
+            DEC     HL         ;Move LH Player back one digit
+            JR      BUTTONS    ;Check buttons again and display
+A_PRESS:
+            ;Button 'A' pressed
+            BIT     1,C        ;Has button 'A' already been pressed?
+            JR      NZ,NO_UPD  ;Yes, Don't update anything and repeat display
+            SET     1,C        ;Set button 'A' pressed flag
+            INC     HL         ;Move current digit for LH closer to 9
+            LD      A,(HL)     ;Load A with the next digit for LH display
+            CP      67H        ;Is it 9? 
+            JR      NZ,DEC_B   ;No, Jump to Decrease RH player
+            ;Player A wins
+DIS_WIN_A:                     ;Flash RH display
+            LD      C,10H      ;Load C with multiplex delay
+LOOP9:
+            LD      A,(DE)     ;Load A with the current digit for RH display
+            OUT     (02),A     ;Output digit to RH display
+            LD      B,10H      ;Load B with short delay
+LOOP10:     DJNZ    LOOP10     ;Delay
+            XOR     A          ;Zero A
+            SET     7,A        ;Set Bit 7 to activate LH display
+            ADD     A,(HL)     ;Add A with the current digit for LH display
+            OUT     (02),A     ;Output digit to LH display
+            LD      B,10H      ;Load B with short delay
+LOOP11:     DJNZ    LOOP11     ;Delay
+            DEC     C          ;Decrease multiplex repeater
+            JR      NZ,LOOP9   ;Repeat display
+            LD      C,10H      ;Load C with multiplex delay
+LOOP12:
+            LD      A,(DE)     ;Load A with the current digit for RH display
+            OUT     (02),A     ;Output digit to RH display
+            LD      B,10H      ;Load B with short delay
+LOOP13:     DJNZ    LOOP13     ;Delay
+            XOR     A          ;Zero A
+            OUT     (02),A     ;Output digit to LH display
+            LD      B,10H      ;Load B with short delay
+LOOP14:     DJNZ    LOOP14     ;Delay
+            DEC     C          ;Decrease multiplex repeater
+            JR      NZ,LOOP12  ;Repeat display
+            JR      DIS_WIN_A  ;Keep Flashing Screen forever!
+DEC_B:
+            ;Decrease RH Player digit
+            LD      A,(DE)     ;Load A with the current digit for RH display
+            CP      3FH        ;Is it Zero?
+            JR      NZ,DO_DEC_B ;No, Do Decrease
+            JP      BUTTONS    ;Yes, Just check buttons again and display
+DO_DEC_B:
+            DEC     DE         ;Move RH Player back one digit
+            JP      BUTTONS    ;Check buttons again and display
+
+;Table that displays the numbers 0-9.  Numbers repeat more as they get closer to 9
+SEGTBL:     DB      3FH,06H,06H,5BH,5BH,5BH,4FH,4FH  ;01122233
+            DB      4FH,4FH,66H,66H,66H,66H,66H,6DH  ;33444445
+            DB      6DH,6DH,6DH,6DH,6DH,7DH,7DH,7DH  ;55555666
+            DB      7DH,7DH,7DH,7DH,07H,07H,07H,07H  ;66667777
+            DB      07H,07H,07H,07H,7FH,7FH,7FH,7FH  ;77778888
+            DB      7FH,7FH,7FH,7FH,7FH,67H          ;888889
+;Fill
+            DB      00H,00H,00H,00H,00H,00H,00H,00H

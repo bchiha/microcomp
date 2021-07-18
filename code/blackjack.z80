@@ -1,0 +1,210 @@
+; BLACKJACK game for the Microcomp
+; --------------------------------
+;
+; Published in the Talking Electronics Magazine issue 14
+; Listing type in by Brian Chiha
+;
+; The aim of this game to reach a total of '21' in playing card values.  Two
+; cards are selected by pressing button 'B'.  If the total is under 21, then
+; another card is to be selected.  If the total reaches 21, you win and if
+; the total goes over 21, then you loose.  If an ACE is received and the total
+; goes over 21, the ACE is converted to 1 point instead of 11.
+; It is a fun game but it is all luck, so it might take a few goes to get to 21
+
+;Constants
+BTN:        EQU     40H            ;Button 'B' 
+
+            ORG     0000H 
+START:               
+            ;Set up
+            XOR     A          ;Zero registers A,I,E and C
+            LD      I,A        ;I Register used to detect 2nd push of button
+            LD      E,A        ;E Register used to keep the tally of 21
+            LD      C,A        ;C Register used to test if ACE card is present
+            LD      IX,CARDS   ;Load IX with start of Cards Table
+GAME:
+            ;Start of game loop            
+            IN      A,(01)     ;Read Input Latch
+            CP      BTN        ;Is button 'B' still pressed?
+            JR      Z,START    ;Yes, go back to start to prevent cheating!
+CRD_SEL:
+            ;Cycle through cards quickly, wait for button 'B' press
+            LD      IY,CARDS+3 ;No, Point IY to start of real Cards table 
+            LD      H,0DH      ;store H with number of Cards in Card table
+NXT_CRD:
+            ;Display one card at a time
+            LD      A,(IX+0)   ;Load A with first byte of card table
+            OUT     (02),A     ;Output to RH Display
+            LD      B,08H      ;Load B with small delay
+LOOP1:      DJNZ    LOOP1      ;Delay
+            XOR     A          ;Zero A
+            SET     7,A        ;Set bit 7 to output to LH display
+            ADD     A,(IX+1)   ;Load A with second byte of card table
+            OUT     (02),A     ;Output to LH Display
+            IN      A,(01)     ;Read Input Latch
+            CP      BTN        ;Has button 'B' been pressed?
+            JR      Z,SELECT   ;Yes, jump to handle button press
+            LD      B,04H      ;Load B with small delay
+LOOP2:      DJNZ    LOOP2      ;Delay
+            INC     IY         ;Increase IY
+            INC     IY         ;To move to 
+            INC     IY         ;Next card
+            DEC     H          ;Decrease card count
+            JR      NZ,NXT_CRD ;If H isn't zero, jump to display next card
+            JR      CRD_SEL    ;Repeat card selection routine
+SELECT:         
+            ;Card has been selected, display it.
+            LD      D,60H      ;Display selected carf for 96 cycles
+DISPLAY:
+            LD      A,(IY+0)   ;Load A with first byte of card table
+            OUT     (02),A     ;Output to RH Display
+            LD      B,10H      ;Load B with small delay
+LOOP3:      DJNZ    LOOP3      ;Delay
+            XOR     A          ;Zero A
+            SET     7,A        ;Set bit 7 to output to LH display
+            ADD     A,(IY+1)   ;Load A with second byte of card table
+            OUT     (02),A     ;Output to LH Display
+            LD      B,10H      ;Load B with small delay
+LOOP4:      DJNZ    LOOP4      ;Delay
+            DEC     D          ;Decrease counter
+            JR      NZ,DISPLAY ;Repeat display selected card
+
+            ;Add selected card to total count, using software based DAA!!
+            ;This is a really crappy way to do it.  Just use DAA
+            LD      A,(IY+2)   ;Load A with numeric value of selected card
+LOOP5:
+            INC     E          ;Increase tally
+            BIT     1,E        ;Is bit 1 and 3 set?
+            JR      Z,NXT_VAL  ;If so, 
+            BIT     3,E        ;Add 6 to roll over
+            JR      Z,NXT_VAL  ;to next decimal number
+            LD      B,06H      ;load B with 6
+LOOP6:
+            INC     E          ;Increase E
+            DJNZ    LOOP6      ;Loop 6 times
+NXT_VAL:
+            DEC     A          ;Reduce card count for addition to E
+            JR      NZ,LOOP5   ;Keep increasing count until A is zero
+
+            ;Check if card is an ACE, and if one or two cards have been selected
+            LD      A,(IY+0)   ;Load selected card character to A
+            CP      77H        ;Is the card and "A"
+            JR      NZ,NO_ACE  ;No, Skip updating C register
+            SET     7,C        ;Set Bit 7 of C register to indicate an ACE card
+NO_ACE:
+            LD      A,I        ;Load Index Register into A
+            INC     A          ;Update A for button press count
+            LD      I,A        ;Save it back to index register
+            CP      02H        ;Are there 2 button presses yet?            
+            JR      NC,CHK_WIN ;Jump if second button pressed? 1-2 = carry set
+            JR      GAME       ;Repeat Game to select second card
+CHK_WIN:
+            ;Blank display, Check to see if count is 21, if so flash '21',
+            ;otherwise display current card total and keep getting more cards
+            ;until bust
+            LD      D,60H      ;Load D with timer for display
+            XOR     A          ;Zero A
+            OUT     (02),A     ;Blank the Display
+            LD      B,0FFH     ;Load B with long delay
+LOOP7:      DJNZ    LOOP7      ;Delay
+CNT_DIS:
+            LD      HL,NUMTBL  ;Load HL with start of 0-9 number table
+            LD      A,E        ;Load total card count to A
+            CP      21H        ;Is the total '21'
+            JR      Z,WIN      ;Yes, Jump to Win game routine
+            ;Display current card count
+            AND     0FH        ;Mask out upper nibble of count
+            ADD     A,L        ;Index A with start of number table
+            LD      L,A        ;index L with character position
+            LD      A,(HL)     ;Load A with segment number
+            OUT     (02),A     ;Output A to Right Hand Segment
+            LD      B,10H      ;Load B with short delay
+LOOP8:      DJNZ    LOOP8      ;Delay
+            LD      A,E        ;Reload A with card count
+            RRA                ;Swap upper
+            RRA                ;nibble with
+            RRA                ;lower nibble
+            RRA                ;
+            AND     0FH        ;Mask out upper nibble of count    
+            LD      HL,NUMTBL  ;Load HL with start of 0-9 number table
+            ADD     A,L        ;Index A with start of number table
+            LD      L,A        ;index L with character position
+            LD      A,(HL)     ;Load A with segment number
+            SET     7,A        ;Set Bit 7 to output on Left Hand display
+            OUT     (02),A     ;Output A to Left Hand Segment
+            LD      B,08H      ;Load B with short delay
+LOOP9:      DJNZ    LOOP9      ;Delay
+            DEC     D          ;Decrease Display counter
+            JR      NZ,CNT_DIS ;Repeat card count display if D isn't zero
+            ;Check if ACE card and count is over 22, adjust ACE to be 1 not 11
+            LD      A,E        ;Load A with current card total
+            CP      22H        ;Is it over 21?
+            JR      NC,CHK_ACE ;Yes, check for ACE or bust
+            JP      GAME       ;No, select another card
+CHK_ACE:
+            BIT     7,C        ;Has an ACE been selected?
+            JR      Z,BUST     ;No, then over 21 and bust!
+            SUB     10H        ;Yes, subtract 10 hex from total to make ACE=1
+            LD      E,A        ;Save updated card tally to E
+            RES     7,C        ;Reset ACE flag
+            JR      CHK_WIN    ;Re display current total and continue
+BUST:
+            ;Game over.  Display a blank screen, wait and restart game
+            XOR     A          ;Zero A
+            OUT     (02),A     ;Blank the display
+            LD      B,0FFH     ;Load B with long delay
+LOOP10:     DJNZ    LOOP10     ;Long Delay
+LOOP11:     DJNZ    LOOP11     ;Long Delay
+LOOP12:     DJNZ    LOOP12     ;Long Delay
+LOOP13:     DJNZ    LOOP13     ;Long Delay
+            JP      START      ;Restart Game
+WIN:
+            ;Score equal 21, display 21 and flash it until button 'B' pressed
+            LD      C,10H      ;Load C with flash delay
+WIN_DIS:
+            LD      A,06H      ;Load A with the characer '1'
+            OUT     (02),A     ;Output a '1' to right hand display
+            LD      B,10H      ;Load B with short delay
+LOOP14:     DJNZ    LOOP14     ;Delay
+            LD      A,0DBH     ;Load A with the character '2' for LH display
+            OUT     (02),A     ;Output a '2' to left hand display
+            LD      B,10H      ;Load B with short delay
+LOOP15:     DJNZ    LOOP15     ;Delay
+            DEC     C          ;Decrease flash counter
+            JR      NZ,WIN_DIS ;Repeat '21' display if c isn't zero
+            XOR     A          ;Zero A
+            OUT     (02),A     ;Output a '1' to right hand display
+            LD      B,0FFH     ;Load B with long delay
+LOOP16:     DJNZ    LOOP16     ;Delay
+            IN      A,(01)     ;Read input latch
+            CP      BTN        ;Has Button 'B' been pressed?
+            JP      Z,START    ;Yes, Jump to start of game
+            JR      WIN        ;No, keep displaying winning screen
+
+            DB      00H,00H,00H,00H,00H,00H,00H  ;Fill
+
+;Table that displays the numbers 0-9.  Numbers repeat more as they get closer to 9
+NUMTBL:     DB      3FH,06H,5BH,4FH,66H,6DH,7DH,07H ;01234567
+            DB      7FH,67H,00H,00H,00H,00H,00H,00H ;89
+
+;Cards Table, the first two bytes produce the 'cards' on the display and the thrid
+;byte is the numeric value.
+CARDS:      DB      40H,40H,00H  ;'--' 0
+            DB      5BH,00H,02H  ;'2_' 2
+            DB      4FH,00H,03H  ;'3_' 3
+            DB      66H,00H,04H  ;'4_' 4
+            DB      6DH,00H,05H  ;'5_' 5
+            DB      7DH,00H,06H  ;'6_' 6
+            DB      07H,00H,07H  ;'7_' 7
+            DB      7FH,00H,08H  ;'8_' 8
+            DB      67H,00H,09H  ;'9_' 9
+            DB      3FH,06H,0AH  ;'10' 10
+            DB      1EH,00H,0AH  ;'J_' 10
+            DB      2FH,00H,0AH  ;'Q_' 10
+            DB      75H,00H,0AH  ;'K_' 10
+            DB      77H,00H,0BH  ;'A_' 11
+            DB      00H,00H,00H  ;Fill
+            DB      00H,00H,00H  ;Fill
+
+
+
