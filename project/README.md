@@ -4,7 +4,7 @@ Thank you for showing interest in this project.  This folder contains all the in
 
 For usage instructions, refer to the [documents](../documents) folder.
 
-The first thing you should do when starting this project is to have a read of [microcomp_publication.pdf](../documents/microcomp_publication.pdf) in the `documents` folder.  Get familiar with its design.  The [schematic](microcomp_schematic.png) for this PDB is essential identical to the original.  This will assist in fault finding if necessary.  
+The first thing you should do when starting this project is to have a read of [microcomp_publication.pdf](../documents/microcomp_publication.pdf) in the `documents` folder.  Get familiar with its design.  The [schematic](microcomp_schematic.png) for this PCB is essential identical to the original.  This will assist in fault finding if necessary.  
 
 It is possible to plug the board into a 5V USB power supply via the 5V/GND header at the top of the board.  By looking at the schematic, components from the 7805 Voltage regulator to the 9V input can be removed if using 5V.
 
