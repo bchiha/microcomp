@@ -4,6 +4,8 @@ Project is incomplete....If you are here please come back later.  Will be finish
 
 Welcome to the Talking Electronics Microcomp project page.  If you are interested in building the Microcomp head to the [Project](./project) folder.  If you would like to read the original documentation then look in the [Documents](./documents) folder, and if you would like to know a bit of its history keep reading.
 
+<img align="left" width="100" height="100" src="/pictures/microcomp_ad.png">
+
 The [Talking Electronics](http://www.talkingelectronics.com/te_interactive_index.html) Micro Computer or Microcomp for short was a 3-Chip Computer based on the Z80 Microprocessor.  It was created in the Mid 80's by Colin Mitchell the founder of TE and sold as a single board microcontroller.  Its purpose was as a Z80 trainer to compete/complement with the Talking Electronic Computer (TEC) and be used to control and automate various external devices like lights, sensors and relays.  But realistically due to its large size, lack of memory and lack of expansion the product never sold well.
 
 The Microcomp had a number of things that went against being a viable product.
