@@ -1,8 +1,10 @@
 # Microcomp project information
 
-Thank you for showing interest in this project.  This folder contains all the information needed to build the Microcomp.  This includes the build instructions and part list, the 4k master ROM or upper/lower 2k ROMs, circuit schematic to assist with building/fault finding and PCB gerber files if you want to produce your own board.
+Thank you for showing interest in this project.  This folder contains all the information needed to build the Microcomp-2.  This includes the build instructions and part list, the 4k master ROM or upper/lower 2k ROMs, circuit schematic to assist with building/fault finding and PCB gerber files if you want to produce your own board.
 
 For usage instructions, refer to the [documents](../documents) folder.
+
+<img width="400" src="../pictures/front_panel.png">
 
 The first thing you should do when starting this project is to have a read of [microcomp_publication.pdf](../documents/microcomp_publication.pdf) in the `documents` folder.  Get familiar with its design.  The [schematic](microcomp_schematic.png) for this PCB is essential identical to the original.  This will assist in fault finding if necessary.  
 
@@ -10,13 +12,25 @@ It is possible to plug the board into a 5V USB power supply via the 5V/GND heade
 
 Also, ensure that the 74LS273 D Flip Flip is an 'LS'.  The 'HC' version will not work as one frustrated user found out.
 
+There is provision of two more buttons on the schematic, buttons 'C' and 'D', I haven't included these on the board as no current software uses them.  Also, I have not included an unregulated power input based on the schematic, I have added a 5V/GND header instead.
+
 Get in contact with me if you have any questions or issue.  Hopefully, I can help.
+
+## Build video and demonstration
+I have created a video that inludes the history of the board, building it and using the software.  Once you have a look, please subscribe if you would like to see more Z80 videos.
+
+[Instructional Video Link TODO](http://www.youtube.com/?????)
+
+## Add On's
+This board can accomodate Add On's via the 3272 ROM socket and the header pins at the top of the board.  Add On's are out of scope for this project.  
+
+The Microcomp came with a few Add-On's, this was partly due that by itself there wasn't much to do with it and the lack of RAM.  There are some board designes floating around like the 4 seven segment output board, morse trainer and phone dialer.  The only one that was ever published was the Naughts and Crosses game.  I havent typed in the code for this or built the board.  If you would like to build it, please see the [Part 3](../documents/microcomp_publication_part3.pdf) document in the documents folder.
 
 ## Burning the ROM
 
 The Microcomp is set up to use a 4kb 2732 EPROM.  The initial Microcomp came with a 2kb lower ROM which is detailed in the publication.  No upper ROM was produced, but some larger games were published.  For completism, I added the two games published in Issue 14 and added 3 new programs to complete an upper ROM.  The 4kb binary file and both upper and lower ROMs can be found in this folder.
 
-If you are burning your own ROM, having a 4kb EPROM is ideal, but using a 2kb EEPROM will also work.  For my testing, I used a 2kb `cat28c16a` EEPROM.  If using a 2kb EEPROM, ensure that the 'MEM-SEL' header jumper is set to 'H' or High.  This will ensure that pin 21 (Write Enable) is not active.
+If you are burning/programming your own ROM, having a 4kb EPROM is ideal, but using a 2kb EEPROM will also work.  For my testing, I used a 2kb `cat28c16a` EEPROM.  If using a 2kb EEPROM, ensure that the 'MEM-SEL' header jumper is set to 'H' or High.  This will ensure that pin 21 (Write Enable) is not active.  EPROM programmers like the TL866ii Plus will work fine or if you are ultra retro you can use the TEC Eprom Burner if you have one!
 
 ## Lower 2k ROM
 The Lower ROM contains the code listed in Issue 13,14 and Part 3 published by Talking Electronics.  I created a full annotation of the code.  This can be found in the [documents](../documents) folder.  But a more detailed description can be found the mentioned publications.  
