@@ -4,7 +4,7 @@ Thank you for showing interest in this project.  This folder contains all the in
 
 For usage instructions, refer to the [documents](../documents) folder.
 
-<img width="400" src="../pictures/front_panel.png">
+<img width="800" src="../pictures/front_panel.png">
 
 The first thing you should do when starting this project is to have a read of [microcomp_publication.pdf](../documents/microcomp_publication.pdf) in the `documents` folder.  Get familiar with its design.  The [schematic](microcomp_schematic.png) for this PCB is essential identical to the original.  This will assist in fault finding if necessary.  
 
@@ -17,7 +17,7 @@ There is provision of two more buttons on the schematic, buttons 'C' and 'D', I 
 Get in contact with me if you have any questions or issue.  Hopefully, I can help.
 
 ## Build video and demonstration
-I have created a video that inludes the history of the board, building it and using the software.  Once you have a look, please subscribe if you would like to see more Z80 videos.
+I have created a video that includes the history of the board, building it and using the software.  Once you have a look, please subscribe if you would like to see more Z80 videos.
 
 [Instructional Video Link TODO](http://www.youtube.com/?????)
 
