@@ -19,7 +19,7 @@ Get in contact with me if you have any questions or issues.  Hopefully, I can he
 ## Build video and demonstration
 I have created a video that includes the history of the board, building it and using the software.  Once you have a look, please subscribe if you would like to see more Z80 videos.
 
-[Instructional Video Link TODO](http://www.youtube.com/?????)
+[Instructional Video Link](https://youtu.be/iamr3gj8vU8)
 
 ## Add On's
 This board can accommodate Add On's via the 3272 ROM socket and the header pins at the top of the board.  Add On's are out of scope for this project.  
