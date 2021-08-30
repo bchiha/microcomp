@@ -2,8 +2,6 @@
 
 Thank you for showing interest in this project.  This folder contains all the information needed to build the Microcomp-2.  This includes the build instructions and part list, the 4k master ROM or upper/lower 2k ROMs, circuit schematic to assist with building/fault finding and PCB Gerber files if you want to produce your own board.
 
-I have a few boards for sale, the cost is $20 AUD.  This includes the board, a fully programmed 4k ROM, a 74LS273 latch and some loose components.  Email me on brian.chiha@gmail.com if you are interested.
-
 For usage instructions, refer to the [documents](../documents) folder.
 
 <img width="800" src="../pictures/front_panel.png">
