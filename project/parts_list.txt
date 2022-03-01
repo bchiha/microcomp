@@ -1,0 +1,60 @@
+Parts List
+
+IC's
+1   -   Z80 CPU
+1   -   2732 / 2716 EEPROM
+1   -   74LS273
+1   -   7805 Voltage Regulator
+
+LEDs
+2   -   FND 560 7-Segment Display
+17  -   3mm Red LEDs
+8   -   3mm Green LEDs
+
+Resistors
+1   -   10 Ω
+8   -   100 Ω
+1   -   330 Ω
+1   -   470 Ω
+1   -   3.3 KΩ
+1   -   4.7 KΩ
+14  -   10 KΩ
+3   -   22 KΩ
+2   -   39 KΩ
+4   -   100 KΩ
+1   -   100 KΩ Horizontal Piher Trimpot
+
+Capacitors
+1   -   1µF 63v electro
+1   -   1000µF 25v electro
+2   -   1nF MKT poly
+1   -   100nF MKT poly
+
+Transistors
+8   -   BC547 NPN
+1   -   BC557 PNP
+
+Diodes
+9   -   1N4148
+4   -   1n4004
+
+Connectors
+17  -   Header pins
+1   -   5mm pitch 2-way Screw Terminal
+
+Switches
+3   -   6mm Tactile
+1   -   SPDT Slide Switch
+1   -   8 way DIP Switch
+
+Other
+1   -   Piezo Buzzer
+1   -   20 Pin IC Socket
+1   -   24 Pin IC Socket
+1   -   40 Pin IC Socket
+1   -   TO-220 Heatsink   
+5   -   M3 Screw / Nut / Spacer
+1   -   2 pin header jumper
+
+
+
