@@ -59,6 +59,12 @@ The programs included are:
 
 5. LED Demonstration - This is a series of LED output sequences that uses the 4x4 Matrix, Binary LEDs and the two Seven Segment displays.  The sequences alternate between singular output data and 4x4 multiplexing.  The demonstration includes animation, scrolling text and interesting sequences.  Study how the code works to make your own patterns.
 
+## User Projects
+*  David Saul has done an impressive upgrade to the MicroComp.  He has used the MicroComp to drive a VFD Clock.  Have a look at his [GitHub project page](https://github.com/DavidMS51/TE_MicroComp) for more details.
+*  Scott Faulkner has added 'RAM' to the board by using a piggy back connection that sits underneith the EPROM.  The Chip Select for the RAM is separated by using a simple resistor/transistor circuit for addresses over 2K. The MicroComp finally has Memory!
+
+<img width="800" src="../pictures/mc_projects.jpg">
+
 ## Contributions
 I would like to thank Colin Mitchell and Scott Faulkner for assisting with the development of this project.
 
