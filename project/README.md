@@ -2,6 +2,8 @@
 
 Thank you for showing interest in this project.  This folder contains all the information needed to build the Microcomp-2.  This includes the build instructions and part list, the 4k master ROM or upper/lower 2k ROMs, circuit schematic to assist with building/fault finding and PCB Gerber files if you want to produce your own board.
 
+Purchase a Microcomp PCB [here](https://www.ebay.com.au/itm/115344378327)
+
 For usage instructions, refer to the [documents](../documents) folder.
 
 <img width="800" src="../pictures/front_panel.png">
