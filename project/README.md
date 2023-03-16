@@ -6,7 +6,7 @@ Purchase a Microcomp PCB [here](https://www.ebay.com.au/itm/115344378327)
 
 For usage instructions, refer to the [documents](../documents) folder.
 
-<img width="800" src="../pictures/front_panel.png">
+<img width="800" src="../pictures/product.png">
 
 The first thing you should do when starting this project is to have a read of [microcomp_publication.pdf](../documents/microcomp_publication.pdf) in the `documents` folder.  Get familiar with its design.  The [schematic](microcomp_schematic.png) for this PCB is essentially identical to the original.  This will assist in fault finding if necessary.  
 
@@ -63,7 +63,7 @@ The programs included are:
 
 ## User Projects
 *  David Saul has done an impressive upgrade to the MicroComp.  He has used the MicroComp to drive a VFD Clock.  Have a look at his [GitHub project page](https://github.com/DavidMS51/TE_MicroComp) for more details.
-*  Scott Faulkner has added 'RAM' to the board by using a piggy back connection that sits underneith the EPROM.  The Chip Select for the RAM is separated by using a simple resistor/transistor circuit for addresses over 2K. The MicroComp finally has Memory!
+*  Scott Faulkner has added 'RAM' to the board by using a piggy back connection that sits underneath the EPROM.  The Chip Select for the RAM is separated by using a simple resistor/transistor circuit for addresses over 2K. The MicroComp finally has Memory!
 
 <img width="800" src="../pictures/mc_projects.jpg">
 
