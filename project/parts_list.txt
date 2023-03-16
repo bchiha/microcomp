@@ -7,7 +7,7 @@ IC's
 1   -   7805 Voltage Regulator
 
 LEDs
-2   -   FND 560 7-Segment Display
+2   -   FND 560 7-Segment Display (RED)
 17  -   3mm Red LEDs
 8   -   3mm Green LEDs
 
@@ -36,7 +36,7 @@ Transistors
 
 Diodes
 9   -   1N4148
-4   -   1n4004
+4   -   1N4004
 
 Connectors
 17  -   Header pins

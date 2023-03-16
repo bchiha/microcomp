@@ -1,0 +1,49 @@
+"Designator","Package","Quantity","Value"
+"Z80 CPU","DIP-40","1","Z8400/Z84C00 CPU"
+"2732","DIP-24","1","NMC27C32B EEPROM"
+"74LS273","DIP-20","1","DM74LS273 D-Flip Flop"
+"7805","TO-220","1","LM7805 Voltage Regulator"
+"7 Segment Display","DIP-10","2","FND 560 Red Segments"
+"LED","3mm","17","Red"
+"LED","3mm","8","Green/Red"
+"10Ω","Carbon/Metal Film","1","10Ω"
+"100Ω","Carbon/Metal Film","8","100Ω"
+"330Ω","Carbon/Metal Film","1","330Ω"
+"470Ω","Carbon/Metal Film","1","470Ω"
+"3k3","Carbon/Metal Film","1","3k3"
+"4k7","Carbon/Metal Film","1","4k7"
+"10k","Carbon/Metal Film","14","10k"
+"22k","Carbon/Metal Film","3","22k"
+"39k","Carbon/Metal Film","2","39k"
+"100k","Carbon/Metal Film","4","100k"
+"100k","Piher Horiz. Trim Pot","1","100k"
+"1µF","Electrolytic","1","63v"
+"1000µF","Electrolytic","1","25v"
+"1nF","MKT or Polyester","2","102"
+"100nF","MKT or Polyester","1","104"
+"BC547","TO-92","8","BC547 NPN"
+"BC557","TO-92","1","BC557 PNP"
+"1N4148","DO-35","9","1N4148 75V 200mA"
+"1N4004","DO-41","4","1N4004 400V 1A"
+"Headers","Male","17","Connectors"
+"Terminal","5mm pitch","1","2 Way Screw Terminal"
+"Button","6mm Tactile","3",""
+"Switch","SPDT","1 or 2","Micro Slide Switch"
+"DIP Switch","DIP-16","1","8 Way Dip Switch"
+"Buzzer","Piezo","1","PCB Mount 7.5mm Pitch"
+"Socket","40 Pin","1","IC Socket"
+"Socket","24 Pin","1","IC Socket"
+"Socket","20 Pin","1","IC Socket"
+"Heatsink","TO-220","1","For 7805 (Optional)"
+"Screws","M3","5","Screw, Nut, Spacer"
+"Jumper","2 Pin","1","Header Jumper"
+
+
+
+
+
+
+
+
+
+
