@@ -2,7 +2,10 @@
 
 Thank you for showing interest in this project.  This folder contains all the information needed to build the Microcomp-2.  This includes the build instructions and part list, the 4k master ROM or upper/lower 2k ROMs, circuit schematic to assist with building/fault finding and PCB Gerber files if you want to produce your own board.
 
-Purchase a Microcomp PCB [here](https://www.ebay.com.au/itm/115344378327)
+Purchase a Microcomp PCB [here](https://www.pcbway.com/project/shareproject/The_Talking_Electronics_Microcomp_V2_09a890f8.html) or click on the PCBWay logo below.
+
+<a href="https://www.pcbway.com/project/shareproject/The_Talking_Electronics_Microcomp_V2_09a890f8.html"><img src="https://www.pcbway.com/project/img/images/frompcbway-1220.png" alt="PCB from PCBWay" /></a>
+
 
 For usage instructions, refer to the [documents](../documents) folder.
 
