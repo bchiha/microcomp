@@ -45,10 +45,10 @@ Connectors
 Switches
 3   -   6mm Tactile
 1   -   SPDT Slide Switch
-1   -   8 way DIP Switch
+1   -   8 way SPST DIP Switch
 
 Other
-1   -   Piezo Buzzer
+1   -   Piezo Buzzer 6.5mm Pitch
 1   -   20 Pin IC Socket
 1   -   24 Pin IC Socket
 1   -   40 Pin IC Socket
