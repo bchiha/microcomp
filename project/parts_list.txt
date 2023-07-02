@@ -9,7 +9,7 @@ IC's
 LEDs
 2   -   FND 560 7-Segment Display (RED)
 17  -   3mm Red LEDs
-8   -   3mm Green LEDs
+8   -   3mm Yellow LEDs
 
 Resistors
 1   -   10 Ω
